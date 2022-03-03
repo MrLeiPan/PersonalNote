@@ -1,0 +1,33 @@
+
+.base-back-color{
+  background-color: #b3c0d1;
+  color: var(--el-text-color-primary);
+  text-align: center;
+  line-height: 60px;
+}
+.common-layout{
+  padding: 95px 80px;
+  width: 1100px;
+  height: 100%;
+  //position: absolute;//使用绝对定位将页面铺满
+  margin: auto;
+  .el-container{
+    //height: 600px;
+    min-height: 500px;
+    border-radius: 250px;
+    box-shadow: 0px 0px 3px rgba(198, 198, 198, 0.56);
+  }
+  .el-aside{
+    overflow: hidden;
+    width: 800px;
+    min-height: 500px;
+    background-color: #ffffff;
+  }
+  .el-main {
+    background-color: #ffffff;
+    color: var(--el-text-color-primary);
+    text-align: center;
+    width: 30%;
+    overflow: hidden;
+  }
+}
