@@ -15,9 +15,7 @@
       <a id="getCode" href="#">获取验证码</a>
     </div>
     <div id="next">
-      <el-button type="success">
-        <router-link to="/forget/phone/modify">下一步</router-link>
-      </el-button>
+      <el-button type="success" @click="next">下一步</el-button>
     </div>
   </div>
 </template>
@@ -33,6 +31,11 @@ export default {
   data(){
     return{
       verifyCode:''
+    }
+  },
+  methods:{
+    next(){
+      this.$router.push("/forget/phone/modify")
     }
   }
 }
@@ -79,6 +82,9 @@ export default {
     a{
       text-decoration: none;
       color:white;
+      display: block;
+      width: 100%;
+      height: 100%;
     }
   }
 }

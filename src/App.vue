@@ -1,10 +1,15 @@
 <template>
   <router-view></router-view>
+
 </template>
 
 <script>
+import Friend from "@/components/FriendSys/Friend";
   export default {
-    name:'App'
+    name:'App',
+    components:{
+      Friend
+    }
   }
 </script>
 

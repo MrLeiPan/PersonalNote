@@ -25,9 +25,8 @@
     </div>
 
     <div id="login-in">
-      <el-button type="primary" round>
-        <span>登</span>
-        <span>陆</span>
+      <el-button type="primary" round @click="login">
+        <span>登</span><span>陆</span>
       </el-button>
     </div>
 
@@ -63,6 +62,10 @@ export default {
   methods:{
     focus(){
       console.log('focus');
+    },
+    //登陆
+    login(){
+      this.$router.replace("/note")
     }
   }
 
