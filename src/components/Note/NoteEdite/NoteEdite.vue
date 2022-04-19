@@ -16,10 +16,13 @@
 <script>
 
 import MyEditor from "@/components/Note/NoteEdite/MyEditor";
+
+
 export default {
   name: "NoteEdite",
   data(){
     return {
+      text:""
     }
   },
   components:{

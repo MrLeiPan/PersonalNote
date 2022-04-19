@@ -25,6 +25,9 @@ export default {
     Login,
     SideBanner,
     SideMain
+  },
+  methods:{
+
   }
 }
 </script>

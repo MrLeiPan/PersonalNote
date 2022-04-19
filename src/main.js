@@ -7,6 +7,11 @@ import router from './router' //vue路由
 import store from './store' //状态管理
 import './assets/css/icon/iconfont.css' //icon
 
-import 'mavon-editor/dist/css/index.css'
+
+
+
 const app = createApp(App)
-app.use(store).use(router,ElementPlus,{locale:zhCn}).mount('#app')
+app.use(store)
+app.use(router)
+app.use(ElementPlus,{locale:zhCn})
+app.mount('#app')

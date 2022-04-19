@@ -4,7 +4,7 @@
   </div>
   <div id="userPop" v-show="isPop">
     <router-link to="/note/user">个人中心</router-link>
-    <router-link to="/userExit">退出登陆</router-link>
+    <router-link to="/">退出登陆</router-link>
   </div>
 </template>
 

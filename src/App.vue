@@ -1,14 +1,17 @@
 <template>
   <router-view></router-view>
-
+  <friend-chat/>
 </template>
 
 <script>
-import Friend from "@/components/FriendSys/Friend";
+import FriendChat from "@/components/FriendSys/FriendChat";
   export default {
     name:'App',
     components:{
-      Friend
+      FriendChat
+    },
+    methods:{
+
     }
   }
 </script>
