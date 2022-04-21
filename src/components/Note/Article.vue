@@ -1,7 +1,10 @@
 <template>
  <!-- {{this.$router.currentRoute.value.query.articleId}}-->
 
-  <note-edite></note-edite>
+  <note-edite>
+
+
+  </note-edite>
 
 
 </template>
@@ -15,6 +18,6 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="less" scoped>
 
 </style>

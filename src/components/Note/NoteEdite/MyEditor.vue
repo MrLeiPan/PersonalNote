@@ -27,7 +27,7 @@ export default {
   },
   data(){
     return{
-      content:'开始记录吧',
+      content:"",
       initialValue:"",
       disabled:false,
       init:{

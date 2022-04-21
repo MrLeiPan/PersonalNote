@@ -171,6 +171,7 @@ export default {
         height: 100%;
         background-color: white;
         flex: 1;
+        padding: 15px;
       }
     }
 
