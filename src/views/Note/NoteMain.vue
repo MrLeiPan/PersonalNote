@@ -32,40 +32,16 @@
               <calendar></calendar>
             </template>
             <template v-slot:menu>
-              <router-link to="/note/personalNote">
+              <router-link v-for="(item,index) in categories"  :key="index" :to="{path:item.path}">
                 <menu-item>
                   <template v-slot:icon>
-                    <i class="iconfont icon-panPencil"></i>
+                    <i :class="item.cicon"></i>
                   </template>
                   <template v-slot:title>
-                    <span>记录笔记</span>
+                    <span>{{item.title}}</span>
                   </template>
                 </menu-item>
               </router-link>
-              <router-link to="/note/myBooks"><menu-item>
-                <template v-slot:icon>
-                  <i class="iconfont icon-panshu"></i>
-                </template>
-                <template v-slot:title>
-                  <span>我的书库</span>
-                </template>
-              </menu-item></router-link>
-              <router-link to="/note/mistake"><menu-item>
-                <template v-slot:icon>
-                  <i class="iconfont icon-pancuoti"></i>
-                </template>
-                <template v-slot:title>
-                  <span>错题记录</span>
-                </template>
-              </menu-item></router-link>
-              <router-link to="/note/circle"><menu-item :hint="true">
-                <template v-slot:icon>
-                  <i class="iconfont icon-panquanzi-xuanzhong"></i>
-                </template>
-                <template v-slot:title>
-                  <span>知识圈</span>
-                </template>
-              </menu-item></router-link>
             </template>
           </note-side-category>
         </div>
@@ -93,7 +69,6 @@
 </template>
 
 <script>
-import {ElContainer,ElHeader,ElMain,ElAside,ElScrollbar} from "element-plus";
 import HeaderLogo from "@/components/Note/Header/HeaderLogo";
 import NoteHeader from "@/components/Note/Header/NoteHeader";
 import HeaderUserInfo from "@/components/Note/Header/HeaderUserInfo";
@@ -102,8 +77,16 @@ import NoteSideCategory from "@/components/Note/Category/NoteSideCategory";
 import MenuItem from "@/components/Note/Category/MenuItem";
 import Calendar from "@/components/Note/Category/Calendar";
 import NoteEdite from "@/components/Note/NoteEdite/NoteEdite";
+
+import api from "@/api/api";
+
 export default {
   name: "NoteMain",
+  data(){
+    return{
+      categories:null,
+    }
+  },
   components:{
     Calendar,
     MenuItem,
@@ -111,13 +94,14 @@ export default {
     HeaderTools,
     HeaderLogo,
     NoteHeader,
-    ElContainer,
-    ElHeader,
-    ElMain,
-    ElAside,
     HeaderUserInfo,
-    ElScrollbar,
     NoteEdite
+  },
+  mounted() {
+    /*获取目录列表*/
+    api.getCategories(-1).then(res =>{
+      this.categories = res.obj
+    })
   }
 }
 </script>

@@ -2,9 +2,8 @@ import { createStore } from 'vuex'
 
 export default createStore({
   state: {
-      chatContext:[
-
-      ]
+    chatContext:[],
+    article:null
   },
   mutations: {
     sendContext(state,msg){

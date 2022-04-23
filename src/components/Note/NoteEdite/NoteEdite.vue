@@ -17,12 +17,13 @@
           <span class="label">浏览数:</span>
           <span class="lv">100</span>
         </div>
-
       </div>
     </div>
   </div>
   <div class="edit-main">
-    <my-editor></my-editor>
+    <my-editor :data="article">
+
+    </my-editor>
   </div>
 </template>
 
@@ -33,6 +34,7 @@ import MyEditor from "@/components/Note/NoteEdite/MyEditor";
 
 export default {
   name: "NoteEdite",
+  props:["article"],
   data(){
     return {
       text:""
@@ -40,7 +42,6 @@ export default {
   },
   components:{
     MyEditor
-
   },
   methods: {
 
@@ -70,4 +71,5 @@ export default {
       }
     }
   }
+
 </style>

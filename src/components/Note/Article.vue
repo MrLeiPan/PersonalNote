@@ -1,7 +1,7 @@
 <template>
  <!-- {{this.$router.currentRoute.value.query.articleId}}-->
 
-  <note-edite>
+  <note-edite :article="this.$router.currentRoute.value.query.articleId">
 
 
   </note-edite>

@@ -7,12 +7,14 @@
 import FriendChat from "@/components/FriendSys/FriendChat";
   export default {
     name:'App',
+    data(){
+      return{
+
+      }
+    },
     components:{
       FriendChat
     },
-    methods:{
-
-    }
   }
 </script>
 

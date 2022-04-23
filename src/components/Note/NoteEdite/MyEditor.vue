@@ -7,7 +7,7 @@
         :initial-value="initialValue"
         model-events="change keydown blur focus paste"
         output-format="html"
-        v-model="content"
+        v-model="data"
 
 
     />
@@ -25,6 +25,7 @@ export default {
   components:{
     Editor
   },
+  props:["data"],
   data(){
     return{
       content:"",
