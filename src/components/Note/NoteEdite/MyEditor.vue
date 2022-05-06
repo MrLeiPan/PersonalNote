@@ -8,6 +8,7 @@
         model-events="change keydown blur focus paste"
         output-format="html"
         v-model="data"
+        @change="change"
 
 
     />
@@ -49,6 +50,9 @@ export default {
   },
   methods: {
     change(){
+      //this.$emit("outContentHandle",this.data)//将数据传递给父级，统一处理
+
+      this.$store.state.article.content=this.data
       console.log("change");
     },
     keydown(){

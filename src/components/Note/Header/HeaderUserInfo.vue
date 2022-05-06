@@ -4,7 +4,7 @@
   </div>
   <div id="userPop" v-show="isPop">
     <router-link to="/note/user">个人中心</router-link>
-    <router-link to="/">退出登陆</router-link>
+    <a style="cursor: pointer" @click="loginOut">退出登陆</a>
   </div>
 </template>
 
@@ -19,6 +19,12 @@ export default {
   methods:{
     popUp(){
       this.isPop=!this.isPop
+    },
+    /*退出登录*/
+    loginOut(){
+      localStorage.removeItem("token")
+      localStorage.removeItem("user")
+      this.$router.replace("/")
     }
   }
 }

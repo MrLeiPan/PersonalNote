@@ -11,7 +11,7 @@
         <template v-slot:head-tools>
           <header-tools>
             <template v-slot:tools>
-                tools
+
             </template>
           </header-tools>
         </template>
@@ -46,6 +46,8 @@
           </note-side-category>
         </div>
         <div id="note-side-list">
+
+          <!--显示二级目录-->
           <el-scrollbar :always="true">
             <router-view name="childrenItem" v-slot="{ Component }">
               <keep-alive>
@@ -53,16 +55,22 @@
               </keep-alive>
             </router-view>
           </el-scrollbar>
+
         </div>
       </div>
+
+
       <div id="note-rw">
+        <!--显示文章的-->
         <el-scrollbar :always="true">
           <router-view name="article" v-slot="{ Component }">
             <keep-alive>
-              <component :is="Component" />
+              <component :is="Component" :key="$route.name" />
             </keep-alive>
           </router-view>
         </el-scrollbar>
+
+
       </div>
     </div>
   </div>
@@ -99,7 +107,7 @@ export default {
   },
   mounted() {
     /*获取目录列表*/
-    api.getCategories(-1).then(res =>{
+    api.getCategories({pid:-1}).then(res =>{
       this.categories = res.obj
     })
   }

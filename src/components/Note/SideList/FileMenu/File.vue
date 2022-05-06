@@ -39,7 +39,8 @@ export default {
       type:String,
       default:'默认文件夹',
     },
-    fileIndex:0
+    fileIndex:0,// 索引下标
+    pid:0//目录id
   },
   data(){
     return{
@@ -48,6 +49,7 @@ export default {
       isSet:false,
       cFileName:this.fileName,
       cFileIndex:this.fileIndex,
+      cPid:this.pid,
       checked:false,
     }
   },
@@ -73,7 +75,7 @@ export default {
     },
     deleteFile(){
       ElMessageBox.confirm(
-          '确定删除该主题?',
+          '删除主题以后，将会删除主题下所有的文件，确定删除吗？',
           '警告',
           {
             confirmButtonText: '确定',
@@ -81,6 +83,7 @@ export default {
             type: 'warning',
           }
       ).then(() => {
+        this.$emit('deleteHandle')
         ElMessage({
           type: 'success',
           message: '删除成功',
@@ -101,20 +104,17 @@ export default {
           type: 'success',
           message: `已成功修改为:${value}`,
         })
-          console.log("msg");
           this.emitData(value)
       }).catch(() => {
       //  console.log("createFile catch");
       })
     },
     emitData(title){
-      console.log(title);
       this.$emit('handle',{
-        index:this.cFileIndex,
-        item:{
-          itemTitle: title,
-          date:'2022-02-20 13:03'
-        }
+            pid:this.cPid,
+            index:this.cFileIndex,
+            itemTitle: title,
+            date:'2022-02-20 13:03'
       })
     },
     checkboxChange(title,index){

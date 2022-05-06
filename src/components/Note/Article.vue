@@ -1,20 +1,32 @@
 <template>
- <!-- {{this.$router.currentRoute.value.query.articleId}}-->
-
-  <note-edite :article="this.$router.currentRoute.value.query.articleId">
 
 
-  </note-edite>
-
+  <note-edite > </note-edite>
 
 </template>
 
 <script>
 
 import NoteEdite from "@/components/Note/NoteEdite/NoteEdite";
+import api from "@/api/api";
 export default {
   name: "Article",
   components: {NoteEdite},
+  data(){
+    return{
+
+    }
+  },
+  watch:{
+
+  },
+  methods:{
+
+  },
+  mounted() {
+
+
+  }
 }
 </script>
 

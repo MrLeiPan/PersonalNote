@@ -1,7 +1,7 @@
 /****   http.js   ****/
 // 导入封装好的axios实例
 import request from './request'
-
+import store from "@/store/index"
 const http ={
     /**
      * methods: 请求

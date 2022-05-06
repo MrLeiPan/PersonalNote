@@ -1,45 +1,15 @@
 <template>
-  <div id="chatMain">
-    <div class="mainContext">
+  <div id="chatMain"
+
+  >
+    <div class="mainContext" >
       <div class="ToName">
         <span class="friendName">小黄</span>
         <div class="more" @click="closeFriendBox">x</div>
       </div>
-      <div class="ToContext">
+      <div class="ToContext" >
         <el-scrollbar height="300px" ref="scrollbarRef" @scroll="scrollbar">
-          <context-item :status="0">
-            <template v-slot:img>
-              <img class="userPT" src="../../../assets/img/userPhoto/120.jpeg" alt="">
-            </template>
-            <template v-slot:info>
-              你好！这里是个人笔记系统，记录你最厉害的个人笔记与好友分享讨论哦！
-            </template>
-          </context-item>
-          <context-item :status="1">
-            <template v-slot:img>
-              <img class="userPT" src="../../../assets/img/userPhoto/b3.jpeg" alt="">
-            </template>
-            <template v-slot:info>
-              Hello!Here is a personal note system, record your most powerful personal notes and friends to share discussions oh!
-            </template>
-          </context-item>
-          <context-item :status="0">
-            <template v-slot:img>
-              <img class="userPT" src="../../../assets/img/userPhoto/120.jpeg" alt="">
-            </template>
-            <template v-slot:info>
-              你好！这里是个人笔记系统，记录你最厉害的个人笔记与好友分享讨论哦！
-            </template>
-          </context-item>
-          <context-item :status="1">
-            <template v-slot:img>
-              <img class="userPT" src="../../../assets/img/userPhoto/b3.jpeg" alt="">
-            </template>
-            <template v-slot:info>
-              Hello!Here is a personal note system, record your most powerful personal notes and friends to share discussions oh!
-            </template>
-          </context-item>
-
+        <!--聊天内容-->
           <context-item :status="1" v-for="chatItem in getChatContext">
             <template v-slot:img>
               <img class="userPT" src="../../../assets/img/userPhoto/b3.jpeg" alt="">
@@ -54,15 +24,14 @@
     </div>
     <div class="mainInput">
       <div class="inputTools">
-
       </div>
-      <textarea  id="userContext" v-model="chatmsg" @keydown.enter.prevent="sendMsg"></textarea>
+      <textarea  id="userContext" v-model="chatmsg" @keydown.enter.prevent="sendMsg" @keydown="inputChange"></textarea>
     </div>
   </div>
 </template>
 
 <script>
-import ContextItem from "@/components/FriendSys/ChatUnit/ContextItem";
+import ContextItem from "@/components/FriendSys/ChatUnit/components/ContextItem";
 import {ElScrollbar} from "element-plus"
 import {mapMutations,mapGetters} from "vuex"
 
@@ -77,7 +46,7 @@ export default {
   data(){
     return{
       isClose:false,
-      chatmsg:""
+      chatmsg:"",
     }
   },
   methods:{
@@ -88,13 +57,25 @@ export default {
     sendMsg(){
       if(this.chatmsg!=''){
         this.sendContext(this.chatmsg)
-        this.chatmsg='';
+        this.chatmsg=''
+        //$nextTick 是在下次 DOM 更新循环结束之后执行延迟回调，在修改数据之后使用 。
+        this.$nextTick(()=>{
+          this.$refs.scrollbarRef.wrap$.scrollTop = this.$refs.scrollbarRef.wrap$.scrollHeight
+        })
+        console.log("send scrollTop:"+this.$refs.scrollbarRef.wrap$.scrollTop)
+        console.log("send scrollHeight:"+this.$refs.scrollbarRef.wrap$.scrollHeight)
+
       }
     },
     scrollbar(scrollEvent){
-      console.log(this.$refs.scrollbarRef);
-      scrollEvent.scrollTop=this.$refs.scrollbarRef.wrap$.scrollTop;
-    }
+      console.log(this.$refs.scrollbarRef.wrap$.scrollHeight);
+      scrollEvent.scrollTop=this.$refs.scrollbarRef;
+    },
+    inputChange(){
+      console.log("change  scrollTop:"+this.$refs.scrollbarRef.wrap$.scrollTop)
+      console.log( "change scrollHeight:"+this.$refs.scrollbarRef.wrap$.scrollHeight)
+    },
+
   },
   computed:{
     ...mapGetters(['getChatContext']),

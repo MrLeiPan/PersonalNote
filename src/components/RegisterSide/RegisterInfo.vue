@@ -2,11 +2,11 @@
   <div id="user-register-info">
     <div class="input1">
       <div class="info-hint">用户名：</div>
-      <el-input v-model="userName" placeholder="请输入用户名"></el-input>
+      <el-input v-model="username" placeholder="请输入用户名"></el-input>
     </div>
     <div class="input1">
       <div class="info-hint">密  码：</div>
-      <el-input v-model="passWord" placeholder="请输入密码" :show-password="true"></el-input>
+      <el-input v-model="password" placeholder="请输入密码" :show-password="true"></el-input>
     </div>
     <div class="input1">
       <div class="info-hint">职  业：</div>
@@ -14,8 +14,8 @@
         <el-option
             v-for="item in options"
             :key="item.value"
-            :label="item.label"
-            :value="item.value">
+            :label="item.major"
+            :value="item.major">
         </el-option>
       </el-select>
     </div>
@@ -33,39 +33,42 @@
       <a id="getCode" href="#">获取验证码</a>
     </div>
     <div class="input1">
-      <el-button type="primary">注册账号</el-button>
+      <el-button type="primary" @click.stop="register">注册账号</el-button>
     </div>
   </div>
 </template>
 
 <script>
 import {ElInput,ElSelect,ElOption,ElButton} from "element-plus";
-
+import { h } from 'vue'
+import { ElNotification } from 'element-plus'
+import api from "@/api/api";
 export default {
   name: "RegisterInfo",
   data(){
     return{
-      userName:'',
-      passWord:'',
+      username:'',
+      password:'',
       phone:'',
       verifyCode:'',
       options: [{
-        value: '选项1',
-        label: '计算机科学与技术'
+        value: '1',
+        major: '计算机科学与技术'
       }, {
-        value: '选项2',
-        label: '软件工程'
+        value: '2',
+        major: '软件工程'
       }, {
-        value: '选项3',
-        label: '电子商务'
+        value: '3',
+        major: '电子商务'
       }, {
-        value: '选项4',
-        label: '会计'
+        value: '4',
+        major: '会计'
       }, {
-        value: '选项5',
-        label: '土木工程'
+        value: '5',
+        major: '土木工程'
       }],
-      value: ''
+      value: '',
+      email:''
     }
   },
   components:{
@@ -73,6 +76,72 @@ export default {
     ElSelect,
     ElOption,
     ElButton
+  },
+  methods:{
+    /*注册*/
+    register(){
+      if (this.username ==='' || this.username ===null){
+        ElNotification({
+          title: '注册提醒',
+          message: h('i', { style: 'color: teal' }, '用户名不能为空'),
+        })
+        return null
+      }
+
+      if (this.password ==='' || this.password ===null){
+        ElNotification({
+          title: '注册提醒',
+          message: h('i', { style: 'color: teal' }, '密码不能为空'),
+        })
+        return null
+      }
+
+      if (this.phone ==='' || this.phone ===null){
+        ElNotification({
+          title: '注册提醒',
+          message: h('i', { style: 'color: teal' }, '手机号不能为空'),
+        })
+        return null
+      }
+
+      if (this.email ==='' || this.email ===null){
+        ElNotification({
+          title: '注册提醒',
+          message: h('i', { style: 'color: teal' }, '邮箱不能为空'),
+        })
+        return null
+      }
+
+      if (this.phone ==='' || this.phone ===null){
+        ElNotification({
+          title: '注册提醒',
+          message: h('i', { style: 'color: teal' }, '手机号不能为空'),
+        })
+        return null
+      }
+
+
+      let user = {
+        username:this.username,
+        password:this.password,
+        phone:this.phone,
+        major:this.value,
+        email:this.email
+      }
+
+      api.register(user).then(res=>{
+        console.log(res);
+        ElNotification({
+          title: '注册提醒',
+          message: h('i', { style: 'color: teal' }, res.msg),
+        })
+        if (res.state){
+          this.$router.replace("/")
+        }
+      })
+
+    },
+
   }
 }
 </script>

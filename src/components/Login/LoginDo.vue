@@ -40,18 +40,18 @@
 </template>
 
 <script>
-import {ElRow,ElInput,ElIcon,ElButton} from 'element-plus'
 import { User,Key,Lock } from '@element-plus/icons-vue'
+import { h } from 'vue'
+import { ElNotification } from 'element-plus'
+import {mapMutations,mapGetters} from "vuex"
+import store from "@/store/index"
+import api from "@/api/api";
 export default {
   name: "LoginDo",
   components:{
-    ElRow,
-    ElInput,
-    ElIcon,
     User,
     Key,
-    Lock,
-    ElButton
+    Lock
   },
   data(){
     return{
@@ -65,7 +65,58 @@ export default {
     },
     //登陆
     login(){
-      this.$router.replace("/note")
+
+      if (this.verifyInfo()===1){
+        ElNotification({
+          title: '登录提醒',
+          message: h('i', { style: 'color: teal' }, '用户名不能为空'),
+        })
+        return null
+      }
+
+      if (this.verifyInfo()===2){
+        ElNotification({
+          title: '登录提醒',
+          message: h('i', { style: 'color: teal' }, '密码不能为空'),
+        })
+        return null
+      }
+
+      /*进行请求登录*/
+      let user = {
+        username:this.username,
+        password:this.password
+      }
+
+      /*发送登录请求*/
+      api.login(user).then(res=>{
+        if (res.state){
+          localStorage.setItem("token",res.obj.token)
+          let user = JSON.stringify(res.obj.user)//序列化
+          localStorage.setItem("user",user)
+          console.log(res);
+          //console.log(localStorage.getItem("token"));
+          this.$router.replace("/note")
+        }else{
+          ElNotification({
+            title: '登录提醒',
+            message: h('i', { style: 'color: teal' }, res.msg),
+          })
+          this.$router.replace("/")
+        }
+      })
+
+
+    },
+    /*校验数据是否完整*/
+    verifyInfo(){
+      if(this.username===null || this.username ===''){
+        return 1;
+      }
+      if (this.password===null || this.password ===''){
+        return 2;
+      }
+      return 0;
     }
   }
 

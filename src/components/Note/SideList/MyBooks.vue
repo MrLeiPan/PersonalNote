@@ -1,7 +1,7 @@
 <template>
   <file-tools @handle="addBook" :is-delete="childrenShow"></file-tools>
   <file v-for="(m,index) in menu" :file-name="m.title" :file-index="index" @handle="addItem" @checkChange="change">
-    <file-item v-for="item in m.items" :item-title="item.itemTitle" :item-date="item.date" @click="editArticle(item)"></file-item>
+    <file-item v-for=" (item,index) in m.notes" :item-title="item.title" :item-date="item.createDate"  @click="editArticle(item)"></file-item>
   </file>
 
 </template>
@@ -11,6 +11,8 @@ import File from './FileMenu/File'
 import FileItem from "@/components/Note/SideList/FileMenu/FileItem";
 import FileTools from "@/components/Note/SideList/FileMenu/FileTools";
 import {ElCheckboxGroup} from 'element-plus'
+import api from "@/api/api";
+import {mapMutations,mapGetters} from "vuex"
 export default {
   name: "MyBooks",
   components: {
@@ -23,42 +25,7 @@ export default {
     return{
       childrenShow:false,
       checkedBooks:[],
-      menu:[
-        {
-          title:'心理书籍',
-          items:[
-            {
-              itemTitle: '心理学思维',
-              date:'2022-02-20 13:02'
-            },
-            {
-              itemTitle: '心理学导论',
-              date:'2022-02-20 13:12'
-            },
-            {
-              itemTitle: '心理学与生活',
-              date:'2022-02-20 13:12'
-            }
-          ],
-        },
-        {
-          title:'专业书籍',
-          items:[
-            {
-              itemTitle: 'Java从入门到精通',
-              date:'2022-02-20 13:12'
-            },
-            {
-              itemTitle: 'Python从入门到精通',
-              date:'2022-02-20 13:12'
-            },
-            {
-              itemTitle: 'JVM浅显易懂',
-              date:'2022-02-20 13:12'
-            }
-          ]
-        }
-      ]
+      menu:[]
     }
   },
   methods:{
@@ -76,10 +43,19 @@ export default {
         this.childrenShow=true;
       }
     },
+    ...mapMutations(['renderArticle']),//加载方法
     editArticle(data){
-      this.$router.push({path:'/note/mybooks/article',query:{articleId:data.itemTitle}})
+     // this.$router.push({path:'/note/myBooks/article',query:{data:data.id}})
+      this.$router.push('/note/myBooks/article')
+      this.renderArticle(data)
     }
   },
+  async mounted() {
+    /*获取级联菜单,以及包含了三级信息*/
+    await api.getBooksCategories({pid:2}).then(res=>{
+      this.menu = res.obj
+    })
+  }
 }
 </script>
 

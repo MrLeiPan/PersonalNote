@@ -1,167 +1,39 @@
 <template>
   <div id="bar">
-    <div class="barHead">
+    <div class="barHead" >
         <img src="../../../assets/img/userPhoto/b3.jpeg" alt="">
         <div class="userName">
             小美
         </div>
       </div>
+    <!--好友列表切换-->
     <div class="barTools">
-      <div class="chatingLabel" :class="{currentBox:isCurrent}" @click="switchFun">
+      <div class="chatingLabel" :class="{currentBox:tag1}"  @click="switchTag(1)">
         聊天
       </div>
-      <div class="myFriendsLabel" :class="{currentBox:!isCurrent}" @click="switchFun">
+      <div class="myFriendsLabel" :class="{currentBox:tag2}" @click="switchTag(2)">
         好友
       </div>
     </div>
+  <!--好友列表，包括好友聊天列表-->
     <div class="friendsList">
         <el-scrollbar height="340px">
-          <div class="friendChating" v-show="isCurrent">
-            <friend-list>
+          <div class="friendChating" v-show="tag1">
+            <friend-list v-for="fc in getFriendsChat">
               <template v-slot:img>
                 <img src="../../../assets/img/userPhoto/120.jpeg" alt="">
               </template>
-              <template v-slot:friendName>小黄</template>
+              <template v-slot:friendName>{{fc.name}}</template>
               <template v-slot:msgTime>周一</template>
-              <template v-slot:friendContext>Hello!Here is a personal note sy</template>
-            </friend-list>
-            <friend-list>
-              <template v-slot:img>
-                <img src="../../../assets/img/userPhoto/10.jpeg" alt="">
-              </template>
-              <template v-slot:friendName>小张</template>
-              <template v-slot:msgTime>周一</template>
-              <template v-slot:friendContext>啊啊啊啊</template>
-            </friend-list>
-            <friend-list>
-              <template v-slot:img>
-                <img src="../../../assets/img/userPhoto/120.jpeg" alt="">
-              </template>
-              <template v-slot:friendName>小黄</template>
-              <template v-slot:msgTime>周一</template>
-              <template v-slot:friendContext>Hello!Here is a personal note sy</template>
-            </friend-list>
-            <friend-list>
-              <template v-slot:img>
-                <img src="../../../assets/img/userPhoto/10.jpeg" alt="">
-              </template>
-              <template v-slot:friendName>小张</template>
-              <template v-slot:msgTime>周一</template>
-              <template v-slot:friendContext>啊啊啊啊</template>
-            </friend-list>
-            <friend-list>
-              <template v-slot:img>
-                <img src="../../../assets/img/userPhoto/120.jpeg" alt="">
-              </template>
-              <template v-slot:friendName>小黄</template>
-              <template v-slot:msgTime>周一</template>
-              <template v-slot:friendContext>Hello!Here is a personal note sy</template>
-            </friend-list>
-            <friend-list>
-              <template v-slot:img>
-                <img src="../../../assets/img/userPhoto/10.jpeg" alt="">
-              </template>
-              <template v-slot:friendName>小张</template>
-              <template v-slot:msgTime>周一</template>
-              <template v-slot:friendContext>啊啊啊啊</template>
-            </friend-list>
-            <friend-list>
-              <template v-slot:img>
-                <img src="../../../assets/img/userPhoto/120.jpeg" alt="">
-              </template>
-              <template v-slot:friendName>小黄</template>
-              <template v-slot:msgTime>周一</template>
-              <template v-slot:friendContext>Hello!Here is a personal note sy</template>
-            </friend-list>
-            <friend-list>
-              <template v-slot:img>
-                <img src="../../../assets/img/userPhoto/10.jpeg" alt="">
-              </template>
-              <template v-slot:friendName>小张</template>
-              <template v-slot:msgTime>周一</template>
-              <template v-slot:friendContext>啊啊啊啊</template>
-            </friend-list>
-            <friend-list>
-              <template v-slot:img>
-                <img src="../../../assets/img/userPhoto/120.jpeg" alt="">
-              </template>
-              <template v-slot:friendName>小黄</template>
-              <template v-slot:msgTime>周一</template>
-              <template v-slot:friendContext>Hello!Here is a personal note sy</template>
-            </friend-list>
-            <friend-list>
-              <template v-slot:img>
-                <img src="../../../assets/img/userPhoto/10.jpeg" alt="">
-              </template>
-              <template v-slot:friendName>小张</template>
-              <template v-slot:msgTime>周一</template>
-              <template v-slot:friendContext>啊啊啊啊</template>
-            </friend-list>
-            <friend-list>
-              <template v-slot:img>
-                <img src="../../../assets/img/userPhoto/120.jpeg" alt="">
-              </template>
-              <template v-slot:friendName>小黄</template>
-              <template v-slot:msgTime>周一</template>
-              <template v-slot:friendContext>Hello!Here is a personal note sy</template>
-            </friend-list>
-            <friend-list>
-              <template v-slot:img>
-                <img src="../../../assets/img/userPhoto/10.jpeg" alt="">
-              </template>
-              <template v-slot:friendName>小张</template>
-              <template v-slot:msgTime>周一</template>
-              <template v-slot:friendContext>啊啊啊啊</template>
-            </friend-list>
-            <friend-list>
-              <template v-slot:img>
-                <img src="../../../assets/img/userPhoto/120.jpeg" alt="">
-              </template>
-              <template v-slot:friendName>小黄</template>
-              <template v-slot:msgTime>周一</template>
-              <template v-slot:friendContext>Hello!Here is a personal note sy</template>
-            </friend-list>
-            <friend-list>
-              <template v-slot:img>
-                <img src="../../../assets/img/userPhoto/10.jpeg" alt="">
-              </template>
-              <template v-slot:friendName>小张</template>
-              <template v-slot:msgTime>周一</template>
-              <template v-slot:friendContext>啊啊啊啊</template>
+              <template v-slot:friendContext>{{fc.lastContent}}</template>
             </friend-list>
           </div>
-          <div class="myFriends" v-show="!isCurrent">
-            <friend-list>
+          <div class="myFriends" v-show="tag2" >
+            <friend-list v-for="f in getMyFriends">
               <template v-slot:img>
                 <img src="../../../assets/img/userPhoto/10.jpeg" alt="">
               </template>
-              <template v-slot:friendName>小张</template>
-              <template v-slot:msgTime>周一</template>
-              <template v-slot:friendContext>啊啊啊啊</template>
-            </friend-list>
-            <friend-list>
-              <template v-slot:img>
-                <img src="../../../assets/img/userPhoto/120.jpeg" alt="">
-              </template>
-              <template v-slot:friendName>小黄</template>
-              <template v-slot:msgTime>周一</template>
-              <template v-slot:friendContext>Hello!Here is a personal note sy</template>
-            </friend-list>
-            <friend-list>
-              <template v-slot:img>
-                <img src="../../../assets/img/userPhoto/10.jpeg" alt="">
-              </template>
-              <template v-slot:friendName>小张</template>
-              <template v-slot:msgTime>周一</template>
-              <template v-slot:friendContext>啊啊啊啊</template>
-            </friend-list>
-            <friend-list>
-              <template v-slot:img>
-                <img src="../../../assets/img/userPhoto/120.jpeg" alt="">
-              </template>
-              <template v-slot:friendName>小黄</template>
-              <template v-slot:msgTime>周一</template>
-              <template v-slot:friendContext>Hello!Here is a personal note sy</template>
+              <template v-slot:friendName>{{f.name}}</template>
             </friend-list>
           </div>
         </el-scrollbar>
@@ -191,19 +63,24 @@
 
 <script>
 import {ElScrollbar,ElInput,ElButton,ElDialog,ElMessage } from "element-plus"
-import FriendList from "@/components/FriendSys/ChatUnit/FriendList";
-import AddFriendPop from "@/components/FriendSys/ChatUnit/AddFriendPop";
+import FriendList from "@/components/FriendSys/ChatUnit/components/FriendList";
+import AddFriendPop from "@/components/FriendSys/ChatUnit/components/AddFriendPop";
+import {mapMutations,mapGetters} from "vuex"
 export default {
   name: "SideBar",
   components: {AddFriendPop, FriendList,ElScrollbar,ElInput,ElButton,ElDialog},
   data(){
     return{
-      isCurrent:true,
+      tag1:true,
+      tag2:false,
       isBoxShow:true,
       friendAccount:'',
       isAddBox:false,
       dialogFormVisible:false
     }
+  },
+  computed:{
+    ...mapGetters(['getMyFriends','getFriendsChat']),
   },
   methods:{
     switchFun(){
@@ -222,6 +99,16 @@ export default {
         type: 'success',
       })
       this.dialogFormVisible=false;
+    },
+    //好友标签切换
+    switchTag(t){
+      if (t==1){
+        this.tag1=true;
+        this.tag2=false;
+      }else{
+        this.tag1=false;
+        this.tag2=true;
+      }
     }
   }
 }
